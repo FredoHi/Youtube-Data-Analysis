@@ -1,8 +1,5 @@
-use youtube_stats;
 
-
-
--- Total Comments for Each Keyword
+-- Query 1. Total Comments for Each Keyword
 -- This query calculates the total number of comments for each keyword. 
 -- By summing up the "comments" column from the "video_stat" table and grouping the results by the "keyword" column, the query reveals which keywords attract the most user comments
 
