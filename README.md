@@ -1,4 +1,4 @@
-# Youtube Keyword Search Analysis
+# Youtube Search Keyword Analysis
 
 ## Project Overview
 
