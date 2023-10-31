@@ -2,10 +2,8 @@
 
 ## Project Overview
 
-
-	This  project aims to analyze the correlation between video popularity and the most relevant/liked comments
-  This project utilizes two datasets: "Video_stat.csv" and "Comment_stat.csv." The "Video_stat.csv" dataset contains essential details about each video, including its title, likes, views, keyword, and comment count. 
-  On the other hand, the "Comment_stat.csv" dataset provides relevant comments for each video listed in "Video_stat.csv," along with information about the sentiments and likes associated with those comments.
+This SQL Project aims to analyze the correlation between video popularity and the most relevant/liked comments. This project utilizes two datasets: "Video_stat.csv" and "Comment_stat.csv." The "Video_stat.csv" dataset contains essential details about each video, including its title, likes, views, keyword, and comment count. 
+On the other hand, the "Comment_stat.csv" dataset provides relevant comments for each video listed in "Video_stat.csv," along with information about the sentiments and likes associated with those comments.
 
 This project revolves around six SQL queries that extract and calculate various metrics from the datasets to gain insights into video popularity and user engagement. 
 
@@ -30,11 +28,73 @@ In the initial data preparation phase, I perform the following tasks:
 
 EDA involve exploring the Youtube datasets to answer key questions, such as:
 - What is the total Comments for each Keyword?
+     ```sql
+ SELECT 
+   	 keyword, SUM(comments) AS num_comments
+	FROM
+    	   video_stat
+	GROUP BY keyword
+	ORDER BY num_comments DESC;
+    ```
+  
 - What is the total Likes for each Keyword?
+	```sql
+        SELECT 
+             keyword, SUM(likes) AS num_likes
+	  FROM
+             video_stat
+	   GROUP BY keyword
+	   ORDER BY num_likes DESC;
+        ```
+  
 - What is the total Views for each Keyword?
+	```sql
+ 	    SELECT 
+               keyword,
+               SUM(views) AS num_of_views
+	    FROM
+               video_stat
+	    GROUP BY keyword
+            ORDER BY num_of_views DESC;
+         ```
+  
 - Which of the keywords has the most-liked Comments?
+
+  ```SQL
+  SELECT 
+       v.keyword, SUM(c.likes) AS num_of_comments_liked
+  FROM
+       video_stat v
+  JOIN
+       comment_stat c ON v.VideoID = c.VideoID
+	GROUP BY v.keyword
+	ORDER BY num_of_comments_liked DESC;
+  ```
+   
 - What is the Ratio of Video Views/Likes per Keyword?
+   ```SQL
+   SELECT 
+	    keyword,
+	    SUM(views) AS total_view,
+	    SUM(likes) AS total_likes,
+	    ROUND((SUM(views) / SUM(likes)), 2) AS ratio
+    FROM
+    	    video_stat
+	GROUP BY keyword
+	ORDER BY ratio DESC;
+   ```
+  
 - What is the average Sentiment Score in each Keyword?
+  ```SQL
+  SELECT 
+       V.keyword, AVG(c.sentiment) AS avg_score
+  FROM
+       video_stat v
+   JOIN
+       comment_stat c ON v.VideoID = c.VideoID
+   GROUP BY v.keyword
+   ORDER BY avg_score DESC;
+  ```
 
 
 ## Results /Findings
